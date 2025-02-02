@@ -64,8 +64,8 @@ pip install -r requirements.txt
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/brand-sentio.git
-   cd brand-sentio
+   git clone https://github.com/Pallavi-Pandey/Tech_Titans.git
+   cd Tech_Titans
    ```
 
 2. Configure your API credentials:
