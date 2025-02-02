@@ -1,7 +1,11 @@
+
+
+---
+
 # BrandSentio - Reddit Sentiment Analysis
 
 ## Overview
-BrandSentio is a Flask-based web application designed to analyze the sentiment of Reddit posts for specific brands or keywords. It leverages the Reddit API and VADER Sentiment Analyzer to provide actionable insights into user sentiment and engagement, making it a valuable tool for brands to monitor their online reputation.
+BrandSentio is a Flask-based web application designed to analyze the sentiment of Reddit posts and news articles for specific brands or keywords. It leverages the **Reddit API**, **News API**, and **VADER Sentiment Analyzer** to provide actionable insights into user sentiment and engagement. This tool is ideal for brands to monitor their online reputation and make data-driven decisions.
 
 This project was built as part of a hackathon, showcasing a quick yet effective solution for sentiment analysis and brand performance evaluation.
 
@@ -9,20 +13,26 @@ This project was built as part of a hackathon, showcasing a quick yet effective 
 
 ## Features
 - **Real-time Reddit Data**: Fetch posts from Reddit using the PRAW API.
+- **News Article Analysis**: Fetch and analyze news articles using the News API.
 - **Sentiment Analysis**: Analyze user sentiment with the VADER SentimentIntensityAnalyzer.
 - **Visualizations**:
   - Sentiment distribution histogram.
   - Upvotes vs. downvotes pie chart.
 - **Brand Performance Score**: A unique metric combining sentiment, upvotes, and downvotes to assess brand reputation.
-- **Detailed Post Analysis**: View individual Reddit posts with sentiment scores.
+- **Detailed Post Analysis**: View individual Reddit posts and news articles with sentiment scores.
+- **User Authentication**: Secure login and registration system for users.
 
 ---
 
 ## Tech Stack
 - **Backend**: Python, Flask
 - **Data Processing**: Pandas, Matplotlib, Seaborn
-- **API Integration**: PRAW (Python Reddit API Wrapper)
+- **API Integration**: 
+  - PRAW (Python Reddit API Wrapper)
+  - News API
+- **Sentiment Analysis**: VADER (Valence Aware Dictionary and sEntiment Reasoner)
 - **Visualization**: Matplotlib, Seaborn
+- **Frontend**: HTML, CSS, Bootstrap
 
 ---
 
@@ -40,6 +50,7 @@ The application is deployed and accessible here:
   - Client ID
   - Client Secret
   - User Agent
+- News API key
 
 ### Install Dependencies
 Run the following command to install the necessary Python libraries:
@@ -57,15 +68,19 @@ pip install -r requirements.txt
    cd brand-sentio
    ```
 
-2. Configure your Reddit API credentials:
-   Edit the `reddit` configuration in `app.py`:
-   ```python
-   reddit = praw.Reddit(
-       client_id='your_client_id',
-       client_secret='your_client_secret',
-       user_agent='your_user_agent'
-   )
-   ```
+2. Configure your API credentials:
+   - Edit the `reddit` configuration in `app.py`:
+     ```python
+     reddit = praw.Reddit(
+         client_id='your_client_id',
+         client_secret='your_client_secret',
+         user_agent='your_user_agent'
+     )
+     ```
+   - Add your News API key in `app.py`:
+     ```python
+     news_api_key = 'your_news_api_key'
+     ```
 
 3. Create the directory for storing plots:
    ```bash
@@ -85,19 +100,20 @@ pip install -r requirements.txt
 ---
 
 ## Usage
-1. Enter a brand name or keyword in the input form on the homepage.
-2. Click "Analyze" to fetch and analyze related Reddit posts.
-3. View:
+1. **Register** or **Login** to access the application.
+2. Enter a brand name or keyword in the input form on the homepage.
+3. Click "Analyze" to fetch and analyze related Reddit posts and news articles.
+4. View:
    - Sentiment distribution plot.
    - Upvotes vs. downvotes pie chart.
    - Brand performance score and interpretation.
-   - Detailed analysis of individual posts.
+   - Detailed analysis of individual posts and articles.
 
 ---
 
 ## Example Output
-- **Sentiment Distribution Plot**: Visualizes sentiment scores across analyzed posts.
-- **Upvotes vs. Downvotes Pie Chart**: Displays the ratio of upvotes to downvotes.
+- **Sentiment Distribution Plot**: Visualizes sentiment scores across analyzed posts and articles.
+- **Upvotes vs. Downvotes Pie Chart**: Displays the ratio of upvotes to downvotes for Reddit posts.
 - **Brand Performance Score**: A concise metric reflecting brand sentiment and engagement.
 
 ---
@@ -110,9 +126,10 @@ pip install -r requirements.txt
 ---
 
 ## Future Work
-- Expand support to other social media platforms.
-- Add time-series analysis for tracking sentiment trends.
-- Integrate machine learning for advanced sentiment analysis.
+- Expand support to other social media platforms (e.g., Twitter, Facebook).
+- Add time-series analysis for tracking sentiment trends over time.
+- Integrate machine learning for advanced sentiment analysis and topic modeling.
+- Enhance user interface with interactive dashboards.
 
 ---
 
@@ -121,4 +138,22 @@ This project is open-source and available under the MIT License.
 
 ---
 
+## Screenshots
+![alt text](image.png)
+*Login Page*
+
+![alt text](image-1.png)
+*Analysis Results*
+
+---
+
 We hope you enjoy using BrandSentio! Feedback and contributions are welcome.
+
+---
+
+### How to Contribute
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Submit a pull request with a detailed description of your changes.
+
+---
