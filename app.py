@@ -5,9 +5,17 @@ from flask import Flask, request, render_template, send_from_directory, url_for
 import praw
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from flask import session, redirect, url_for, flash
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 
 # Initialize Flask app
 app = Flask(__name__)
+
+app.secret_key = 'your_secret_key_here' 
+# Add this in-memory user store (for demonstration purposes)
+users = {}
 
 # Create directory for storing plots
 if not os.path.exists('static/plots'):
@@ -110,7 +118,7 @@ def generate_upvotes_downvotes_pie_chart(df):
 # Route for brand input
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('login'))
 
 # Route to analyze Reddit sentiment
 @app.route('/analyze', methods=['POST'])
@@ -154,6 +162,48 @@ def analyze_brand():
         sentiment_plot=sentiment_plot,
         upvotes_downvotes_plot=upvotes_downvotes_plot
     )
+
+# Route for user registration
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # Check if the username already exists
+        if username in users:
+            flash("Username already exists!", "danger")
+            return redirect(url_for('register'))
+
+        # Hash the password before storing
+        hashed_password = generate_password_hash(password)
+        users[username] = hashed_password  # Store the hashed password
+        flash("Registration successful!", "success")
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+
+# Route for user login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        # Check if the user exists and verify the password
+        if username in users and check_password_hash(users[username], password):
+            session['username'] = username
+            flash("Login successful!", "success")
+            return render_template('index.html')  # Redirect to index page
+        flash("Invalid username or password!", "danger")
+    return render_template('login.html')
+
+# Add a route to log out
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    flash("You have been logged out.", "success")
+    return redirect(url_for('index'))
 
 # Run Flask app
 if __name__ == '__main__':
