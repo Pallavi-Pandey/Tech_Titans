@@ -166,12 +166,18 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        # Check if the user exists and verify the password
-        if username in users and check_password_hash(users[username], password):
+        # Check if the user exists
+        if username not in users:
+            flash("Username not registered. Please register first.", "danger")
+            return redirect(url_for('login'))
+
+        # Verify the password
+        if check_password_hash(users[username], password):
             session['username'] = username
             flash("Login successful!", "success")
             return redirect(url_for('index'))  # Redirect to index page
-        flash("Invalid username or password!", "danger")
+        else:
+            flash("Invalid password!", "danger")
     return render_template('login.html')
 
 # Route for user registration
