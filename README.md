@@ -42,6 +42,11 @@ The application is deployed and accessible here:
 
 ---
 
+Here is the Demo Video of the Prototype:
+👉[Prototype Demo Video](https://drive.google.com/file/d/1d2z7Uy25OaqupUpgaysxD51umTWx3AG7/view?usp=sharing)
+
+---
+
 ## Requirements
 
 ### Prerequisites
